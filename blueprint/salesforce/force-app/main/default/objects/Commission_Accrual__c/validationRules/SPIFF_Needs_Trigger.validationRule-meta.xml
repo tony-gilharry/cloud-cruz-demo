@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>SPIFF_Needs_Trigger</fullName>
+  <active>true</active>
+  <description>Every SPIFF names the moment it pays for (decision 76).</description>
+  <errorDisplayField>SPIFF_Trigger__c</errorDisplayField>
+  <errorConditionFormula>ISPICKVAL(Mechanism__c,"SPIFF") &lt;&gt; NOT(ISBLANK(TEXT(SPIFF_Trigger__c)))</errorConditionFormula>
+  <errorMessage>A SPIFF needs a trigger, and only a SPIFF has one.</errorMessage>
+</ValidationRule>

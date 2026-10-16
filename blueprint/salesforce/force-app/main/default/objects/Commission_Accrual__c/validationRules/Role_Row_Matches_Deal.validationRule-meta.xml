@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Role_Row_Matches_Deal</fullName>
+  <active>true</active>
+  <description>The role row belongs to this partner and this deal.</description>
+  <errorDisplayField>Opportunity_Partner__c</errorDisplayField>
+  <errorConditionFormula>OR(Opportunity_Partner__r.Partner__c &lt;&gt; Partner__c, Opportunity_Partner__r.Opportunity__c &lt;&gt; Opportunity__c)</errorConditionFormula>
+  <errorMessage>The Opportunity Partner row must be for this partner and this opportunity.</errorMessage>
+</ValidationRule>

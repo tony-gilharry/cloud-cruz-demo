@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Contribution_Points__c</fullName><label>Contribution Points</label><description>Approved in introw, synced here for tiering and directory rank (decisions 78, 82).</description><type>Number</type><precision>7</precision><scale>0</scale><required>false</required></CustomField>

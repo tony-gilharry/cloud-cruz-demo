@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Customer</fullName><active>true</active><description>A Cloud Cruz customer. Opportunities always live here, owned by the AE (decision 85).</description><label>Customer</label></RecordType>

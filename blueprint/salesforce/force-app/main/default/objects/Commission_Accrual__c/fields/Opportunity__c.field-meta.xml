@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Opportunity__c</fullName><label>Opportunity</label><description>The customer deal.</description><type>Lookup</type><referenceTo>Opportunity</referenceTo><relationshipName>Commission_Accruals</relationshipName><relationshipLabel>Commission Accruals</relationshipLabel><required>true</required><deleteConstraint>Restrict</deleteConstraint></CustomField>

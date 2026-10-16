@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Needs_Active_L2_Technical</fullName>
+  <active>true</active>
+  <description>An active Level 2 or 3 technical credential on the approval date, or the PSA standing in during the beta (decisions 53, 91).</description>
+  <errorDisplayField>L2_Credential__c</errorDisplayField>
+  <errorConditionFormula>IF(PSA_Stand_In__c, OR(ISBLANK(Approved_On__c), Approved_On__c &gt;= DATE(2027,4,1)), OR(ISBLANK(L2_Credential__c), NOT(OR(ISPICKVAL(L2_Credential__r.Step__c,"Level 2"), ISPICKVAL(L2_Credential__r.Step__c,"Level 3"))), NOT(ISPICKVAL(L2_Credential__r.Track__c,"Technical")), L2_Credential__r.Issued_On__c &gt; Approved_On__c, L2_Credential__r.Expires_On__c &lt;= Approved_On__c))</errorConditionFormula>
+  <errorMessage>Needs an active Level 2 or 3 technical credential on the approval date. Only beta packages (before Apr 1, 2027) can use the PSA stand-in.</errorMessage>
+</ValidationRule>

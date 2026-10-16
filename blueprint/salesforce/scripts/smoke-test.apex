@@ -1,0 +1,55 @@
+// Checks every validation rule on throwaway records, then rolls back: nothing stays in the org.
+// Run: sf apex run --target-org cloud-cruz --file scripts/smoke-test.apex
+// The program's own today (decision 102): tests run on its calendar, not the real date.
+Date asOf = Program_Setting__mdt.getInstance('Default').As_Of_Date__c;
+
+Savepoint sp = Database.setSavepoint();
+Id partnerRt = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Partner').getRecordTypeId();
+Id customerRt = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
+Map<String,Boolean> r = new Map<String,Boolean>();
+Account p1 = new Account(Name='Test Partner A', RecordTypeId=partnerRt, Partner_Tier__c='Premier');
+Account p2 = new Account(Name='Test Partner B', RecordTypeId=partnerRt, Partner_Tier__c='Select');
+Account cust = new Account(Name='Test Customer', RecordTypeId=customerRt);
+insert new List<Account>{p1,p2,cust};
+r.put('Elite without invite blocked', Database.update(new Account(Id=p2.Id, Partner_Tier__c='Elite'), false).isSuccess() == false);
+Opportunity o = new Opportunity(Name='Test Deal', AccountId=cust.Id, StageName='Prospecting', CloseDate=asOf, Deal_Source__c='Sourced', Sourcing_Partner__c=p1.Id, Pricing_Plan__c='Enterprise', ACV__c=100000);
+insert o;
+r.put('Sourced without partner blocked', Database.insert(new Opportunity(Name='X', AccountId=cust.Id, StageName='Prospecting', CloseDate=asOf, Deal_Source__c='Sourced'), false).isSuccess() == false);
+Opportunity_Partner__c src = new Opportunity_Partner__c(Opportunity__c=o.Id, Partner__c=p1.Id, Role__c='Sourced');
+Opportunity_Partner__c impl = new Opportunity_Partner__c(Opportunity__c=o.Id, Partner__c=p2.Id, Role__c='Implementer');
+insert new List<Opportunity_Partner__c>{src, impl};
+r.put('Wrong Sourced partner blocked', Database.insert(new Opportunity_Partner__c(Opportunity__c=o.Id, Partner__c=p2.Id, Role__c='Sourced'), false).isSuccess() == false);
+Opportunity_Partner__c infl = new Opportunity_Partner__c(Opportunity__c=o.Id, Partner__c=p2.Id, Role__c='Influenced');
+insert infl;
+Date paid = asOf.addDays(-10);
+r.put('Commission on Sourced allowed', Database.insert(new Commission_Accrual__c(Partner__c=p1.Id, Opportunity__c=o.Id, Opportunity_Partner__c=src.Id, Mechanism__c='Annualized', Invoice_Paid_On__c=paid, Amount__c=20000, Status__c='Held', Rate__c=20), false).isSuccess());
+r.put('Commission on Influenced blocked', Database.insert(new Commission_Accrual__c(Partner__c=p2.Id, Opportunity__c=o.Id, Opportunity_Partner__c=infl.Id, Mechanism__c='Per invoice', Invoice_Paid_On__c=paid, Amount__c=100, Status__c='Earned'), false).isSuccess() == false);
+r.put('SPIFF on Influenced blocked (work, not cash)', Database.insert(new Commission_Accrual__c(Partner__c=p2.Id, Opportunity__c=o.Id, Opportunity_Partner__c=infl.Id, Mechanism__c='SPIFF', SPIFF_Trigger__c='First customer live', Invoice_Paid_On__c=paid, Amount__c=500, Status__c='Earned'), false).isSuccess() == false);
+r.put('SPIFF on Sourced allowed', Database.insert(new Commission_Accrual__c(Partner__c=p1.Id, Opportunity__c=o.Id, Opportunity_Partner__c=src.Id, Mechanism__c='SPIFF', SPIFF_Trigger__c='First customer live', Invoice_Paid_On__c=paid, Amount__c=500, Status__c='Held'), false).isSuccess());
+r.put('SPIFF without trigger blocked', Database.insert(new Commission_Accrual__c(Partner__c=p1.Id, Opportunity__c=o.Id, Opportunity_Partner__c=src.Id, Mechanism__c='SPIFF', Invoice_Paid_On__c=paid, Amount__c=500, Status__c='Held'), false).isSuccess() == false);
+r.put('Release before hold blocked', Database.insert(new Commission_Accrual__c(Partner__c=p1.Id, Opportunity__c=o.Id, Opportunity_Partner__c=src.Id, Mechanism__c='Annualized', Invoice_Paid_On__c=paid, Amount__c=1, Status__c='Released', Released_On__c=asOf), false).isSuccess() == false);
+r.put('Role row from another partner blocked', Database.insert(new Commission_Accrual__c(Partner__c=p2.Id, Opportunity__c=o.Id, Opportunity_Partner__c=src.Id, Mechanism__c='Annualized', Invoice_Paid_On__c=paid, Amount__c=1, Status__c='Earned'), false).isSuccess() == false);
+Contact c = new Contact(LastName='Engineer', AccountId=p2.Id); insert c;
+Credential__c l1 = new Credential__c(Contact__c=c.Id, Partner__c=p2.Id, Step__c='Level 1', Track__c='Technical', Issued_On__c=asOf, Expires_On__c=asOf.addYears(1));
+Credential__c l2 = new Credential__c(Contact__c=c.Id, Partner__c=p2.Id, Step__c='Level 2', Track__c='Technical', Issued_On__c=asOf, Expires_On__c=asOf.addYears(1), Last_Product_Use_On__c=asOf);
+insert new List<Credential__c>{l1,l2};
+r.put('Accreditation with expiry blocked', Database.insert(new Credential__c(Contact__c=c.Id, Step__c='Sales Accreditation', Issued_On__c=asOf, Expires_On__c=asOf), false).isSuccess() == false);
+r.put('Package with Level 1 blocked', Database.insert(new Implementation_Package__c(Opportunity__c=o.Id, Partner__c=p2.Id, L2_Credential__c=l1.Id, Band__c='$50K to $150K', Consulting_Hours__c=5, Technical_Hours__c=5, Approved_On__c=asOf), false).isSuccess() == false);
+Implementation_Package__c pkg = new Implementation_Package__c(Opportunity__c=o.Id, Partner__c=p2.Id, L2_Credential__c=l2.Id, Band__c='$50K to $150K', Consulting_Hours__c=5, Technical_Hours__c=5, Approved_On__c=asOf);
+r.put('Package with Level 2 allowed', Database.insert(pkg, false).isSuccess());
+r.put('Package amount is 1750', [SELECT Amount__c FROM Implementation_Package__c WHERE Id = :pkg.Id].Amount__c == 1750);
+r.put('Credential counts toward tier', [SELECT Counts_Toward_Tier__c FROM Credential__c WHERE Id = :l2.Id].Counts_Toward_Tier__c);
+r.put('Beta PSA stand-in allowed', Database.insert(new Implementation_Package__c(Opportunity__c=o.Id, Partner__c=p2.Id, PSA_Stand_In__c=true, Band__c='$50K to $150K', Consulting_Hours__c=5, Technical_Hours__c=5, Approved_On__c=Date.newInstance(2027,2,15)), false).isSuccess());
+r.put('PSA stand-in after launch blocked', Database.insert(new Implementation_Package__c(Opportunity__c=o.Id, Partner__c=p2.Id, PSA_Stand_In__c=true, Band__c='$50K to $150K', Consulting_Hours__c=5, Technical_Hours__c=5, Approved_On__c=asOf), false).isSuccess() == false);
+r.put('No credential and no stand-in blocked', Database.insert(new Implementation_Package__c(Opportunity__c=o.Id, Partner__c=p2.Id, Band__c='$50K to $150K', Consulting_Hours__c=5, Technical_Hours__c=5, Approved_On__c=asOf), false).isSuccess() == false);
+r.put('Rate above cap blocked', Database.insert(new Implementation_Package__c(Opportunity__c=o.Id, Partner__c=p2.Id, L2_Credential__c=l2.Id, Band__c='$50K to $150K', Consulting_Hours__c=5, Technical_Hours__c=5, Consulting_Rate__c=175, Approved_On__c=asOf), false).isSuccess() == false);
+Deal_Registration__c dr = new Deal_Registration__c(Partner__c=p1.Id, Customer_Account__c=cust.Id, Status__c='Submitted', Submitted_On__c=Date.newInstance(2026,10,1));
+insert dr;
+r.put('Thursday registration due Monday', [SELECT Due_On__c FROM Deal_Registration__c WHERE Id = :dr.Id].Due_On__c == Date.newInstance(2026,10,5));
+r.put('Approve before an opportunity allowed (90-day protection)', Database.update(new Deal_Registration__c(Id=dr.Id, Status__c='Approved', Answered_On__c=asOf), false).isSuccess());
+r.put('Expired with an opportunity blocked', Database.update(new Deal_Registration__c(Id=dr.Id, Status__c='Expired', Opportunity__c=o.Id, Rejection_Reason__c='protection_window_lapsed'), false).isSuccess() == false);
+r.put('Reject without reason blocked', Database.update(new Deal_Registration__c(Id=dr.Id, Status__c='Rejected', Answered_On__c=asOf), false).isSuccess() == false);
+Lead l = new Lead(LastName='Lead', Company='Agency', Deal_In_Hand__c=true, Temperature__c='Warm');
+r.put('Deal in hand must be Urgent', Database.insert(l, false).isSuccess() == false);
+Database.rollback(sp);
+for (String k : r.keySet()) System.debug(LoggingLevel.ERROR, 'SMOKE ' + (r.get(k) ? 'PASS ' : 'FAIL ') + k);

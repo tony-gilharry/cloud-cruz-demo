@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Sourced_Matches_Sourcing_Partner</fullName>
+  <active>true</active>
+  <description>The Sourced row is the Sourcing Partner on the opportunity (decision 85).</description>
+  <errorDisplayField>Role__c</errorDisplayField>
+  <errorConditionFormula>AND(ISPICKVAL(Role__c,"Sourced"), Opportunity__r.Sourcing_Partner__c &lt;&gt; Partner__c)</errorConditionFormula>
+  <errorMessage>The Sourced partner must match the opportunity's Sourcing Partner.</errorMessage>
+</ValidationRule>

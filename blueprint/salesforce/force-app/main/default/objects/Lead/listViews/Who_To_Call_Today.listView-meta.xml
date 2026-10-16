@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Who_To_Call_Today</fullName><columns>FULL_NAME</columns><columns>LEAD.COMPANY</columns><columns>Segment__c</columns><columns>Temperature__c</columns><columns>Priority__c</columns><columns>Deal_In_Hand__c</columns><columns>LEAD.STATUS</columns><filterScope>Everything</filterScope><filters><field>Temperature__c</field><operation>equals</operation><value>Urgent,Hot,Warm</value></filters><label>Who to call today</label></ListView>

@@ -1,0 +1,56 @@
+# Attribution rules for the Ecosystem Partner Program.
+#
+# This file is the single source of truth for how partner credit is assigned.
+# The seed generator reads the windows below so the synthetic data matches the
+# rules, and the Measurement Layer (Build 2) computes every metric from them.
+# Change a value here, re-seed, and every downstream number follows.
+
+version: 1
+
+# Partner-sourced: the partner brought us the deal.
+sourced:
+  # An opportunity is partner-sourced when it came from an approved deal
+  # registration or a partner referral.
+  origins: [approved_deal_registration, referral]
+  deal_registration_statuses: [approved]
+  referral_touch_types: [referral]
+  # The registration or referral must land no more than this many days
+  # before the opportunity was created. Older signals no longer count.
+  max_days_before_opportunity: 30
+
+# Partner-influenced: a partner helped a deal we (or someone else) sourced.
+influenced:
+  # A touch counts when it happens within this many days before close.
+  window_days: 90
+  touch_types: [referral, co_sell, implementation, influence]
+  # When several partners touch one deal, influenced credit is split in
+  # proportion to these weights. Weights are relative, not percentages.
+  touch_weights:
+    referral: 1.0
+    co_sell: 0.6
+    implementation: 0.4
+    influence: 0.2
+  # "weighted" splits credit by touch weight; "equal" splits it evenly.
+  credit_model: weighted
+
+# Cloud marketplace deals (AWS, GCP, Azure) credit the partner of record.
+marketplace:
+  credit: partner_of_record
+
+# When two partners claim the same deal, apply these in order until one wins.
+tie_breaks:
+  - earliest_approved_deal_registration
+  - highest_touch_weight
+  - earliest_touch
+  - lowest_partner_id   # deterministic last resort
+
+# An active partner has sold, influenced or supported a customer recently.
+active_partner:
+  window_days: 90
+  # sold:       sourcing partner or partner of record on an opportunity
+  #             created or closed in the window
+  # influenced: a referral, co_sell or influence touch in the window
+  # supported:  an implementation touch in the window
+  # Portal logins, webinars and enablement do not count. Engagement is not
+  # the same as selling.
+  counts_as_activity: [sold, influenced, supported]

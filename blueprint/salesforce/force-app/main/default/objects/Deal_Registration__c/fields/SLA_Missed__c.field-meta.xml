@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>SLA_Missed__c</fullName><label>SLA Missed</label><description>Answered late, or still open past the due date.</description><type>Checkbox</type><formula>IF(ISBLANK(Answered_On__c), $CustomMetadata.Program_Setting__mdt.Default.As_Of_Date__c &gt; Due_On__c, Answered_On__c &gt; Due_On__c)</formula><formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs></CustomField>

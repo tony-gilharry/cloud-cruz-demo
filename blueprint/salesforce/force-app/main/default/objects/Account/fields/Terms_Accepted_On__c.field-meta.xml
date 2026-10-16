@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Terms_Accepted_On__c</fullName><label>Terms Accepted On</label><description>Click-through or procurement path (decision 39).</description><type>Date</type><required>false</required></CustomField>

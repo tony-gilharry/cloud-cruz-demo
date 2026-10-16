@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>PSA_Stand_In__c</fullName><label>PSA Stand-In</label><description>Beta only: Cloud Cruz's partner solutions architect was the Level 2 person (decision 91).</description><type>Checkbox</type><defaultValue>false</defaultValue></CustomField>

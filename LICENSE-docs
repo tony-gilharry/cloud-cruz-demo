@@ -1,0 +1,13 @@
+Copyright (c) 2026 Tony Gilharry
+
+The program design and documents in this repository are licensed under the
+Creative Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+This covers README.md, DECISIONS.md, everything in blueprint/ except the
+Salesforce code in blueprint/salesforce/force-app and scripts, foundation/docs/,
+and the screenshots. You may share and adapt them for any purpose, as long as
+you credit Tony Gilharry and link to this repository.
+
+Cloud Cruz and every partner, customer, person and number in this repository are
+fictional. The code is licensed separately under the MIT License: see LICENSE.

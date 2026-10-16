@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Clawback_Until__c</fullName><label>Clawback Until</label><description>A refund before this date reverses the accrual (decision 75).</description><type>Date</type><formula>Invoice_Paid_On__c + 90</formula><formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs></CustomField>

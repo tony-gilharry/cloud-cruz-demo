@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Opportunity_Partner__c</fullName><label>Opportunity Partner</label><description>The partner's role row; decides whether commission is allowed (decision 85).</description><type>Lookup</type><referenceTo>Opportunity_Partner__c</referenceTo><relationshipName>Commission_Accruals</relationshipName><relationshipLabel>Commission Accruals</relationshipLabel><required>true</required><deleteConstraint>Restrict</deleteConstraint></CustomField>

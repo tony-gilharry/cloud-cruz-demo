@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Last_Product_Use_On__c</fullName><label>Last Product Use On</label><description>Counts toward tier only with use in the last 90 days (decision 47).</description><type>Date</type><required>false</required></CustomField>

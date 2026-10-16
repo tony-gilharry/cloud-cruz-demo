@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Customer_Account__c</fullName><label>Customer Account</label><description>Matched if it exists, created if new.</description><type>Lookup</type><referenceTo>Account</referenceTo><relationshipName>Customer_Deal_Registrations</relationshipName><relationshipLabel>Deal Registrations (Customer)</relationshipLabel><required>false</required><deleteConstraint>SetNull</deleteConstraint></CustomField>

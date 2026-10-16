@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Issuer__c</fullName><label>Issuer</label><description>Credly in production, Certifier in the demo (decisions 22, 27).</description><type>Picklist</type><valueSet><restricted>true</restricted><valueSetDefinition><sorted>false</sorted><value><fullName>Credly</fullName><default>false</default><label>Credly</label></value><value><fullName>Certifier</fullName><default>false</default><label>Certifier</label></value></valueSetDefinition></valueSet></CustomField>

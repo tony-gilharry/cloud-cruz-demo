@@ -1,0 +1,168 @@
+# Program rules for Cloud Cruz's Ecosystem Partner Program. Every value here
+# is a decision in DECISIONS.md (numbers in brackets). Attribution lives in
+# attribution.yaml.
+#
+# The seed generator reads these rules so the synthetic data obeys them, then
+# seeds a small set of known problems the later builds are graded on. Change a rule here,
+# re-seed, and every number follows.
+
+version: 2
+
+timeline:
+  beta_start: 2027-01-01          # 90-day beta with about 25 design partners [15]
+  launch: 2027-04-01              # Services path opens [15]
+  technology_path_opens: 2027-10-01
+  resellers_and_marketplace_open: 2027-10-01
+  as_of: 2028-03-31               # end of Year 1
+
+tiers:
+  # Ordered lowest to highest. Counts first, revenue later [33]. A certified
+  # person holds an active credential and used the product in the last 90
+  # days [47]. Contribution points are per half-year review, from Jul 1, 2027 [89].
+  - name: Member
+    certified_people: 0
+    level_2_plus: 0
+    level_3: 0
+    live_joint_customers: 0
+    public_references: 0
+    sourced_revenue: 0
+    contribution_points: 0
+    commission_rate: 0.10           # [72]
+    free_exams_per_year: 5          # [81]
+  - name: Select
+    certified_people: 4             # 2 sales accreditations, 2 technical
+    level_2_plus: 0
+    level_3: 0
+    live_joint_customers: 3
+    public_references: 1
+    sourced_revenue: 0
+    contribution_points: 20
+    commission_rate: 0.15
+    free_exams_per_year: 10
+  - name: Premier
+    certified_people: 10
+    level_2_plus: 3
+    level_3: 0
+    live_joint_customers: 10
+    public_references: 3
+    sourced_revenue: 175000
+    contribution_points: 50
+    commission_rate: 0.20
+    free_exams_per_year: 10
+  - name: Elite
+    # Invitation from the Anchor list, plus a joint business plan [32, 33].
+    certified_people: 25
+    level_2_plus: 8
+    level_3: 8
+    live_joint_customers: 25
+    public_references: 6
+    sourced_revenue: 500000
+    contribution_points: 100
+    commission_rate: 0.25
+    free_exams_per_year: 15
+    invite_only: true
+
+reviews:
+  # Promote within 30 days of qualifying, checked on the 1st of each month;
+  # demotions only at the Jul 1 review with 90 days' notice [33, 92, 109].
+  promotion_check: monthly
+  promotion_within_days: 30
+  demotion_review: 07-01
+  demotion_notice_days: 90
+  elite_invitations: 2028-01-01          # the strongest Anchors are invited [32]
+  rules_hold_months: 12                  # [58]
+
+pricing_plans:                           # [60, 93]
+  self_serve: { billing: monthly, max_acv: 12000 }
+  premium: { billing: quarterly, min_acv: 12000, max_acv: 50000 }
+  enterprise: { billing: quarterly, min_acv: 50000 }
+
+commissions:
+  # Earned only on a paid invoice, held 60 days, released on the next payout
+  # run, reversed if the customer refunds within 90 days [21, 25, 75].
+  hold_days: 60
+  payout_day_of_month: 15
+  clawback_days: 90
+  term_months: 24                        # then a renewal rate, not yet set [73]
+  renewal_rate: null
+  marketplace_partner_of_record_rate: 0.05
+  paying_roles: [sourced, partner_of_record]   # influence counts but is not paid [74, 94]
+  accelerators: null                     # mechanism only; numbers not set [76]
+  spiffs:                                # [76, 88]
+    effective: 2027-07-01
+    first_customer_live: 500
+    first_enterprise_live: 2500
+    retained_12_months: 1000
+
+implementation_package:                  # [45, 53, 61]
+  consulting_rate: 150
+  technical_rate: 200
+  requires_level_2_technical: true
+  beta_psa_stands_in: true               # the PSA is the Level 2 person in the beta [91]
+  eligible_roles: [sourced, implementer, influenced]   # influenced Enterprise deals too [94]
+  beta_budget: 100000
+  bands:
+    - { band: 50k_150k, min_acv: 50000, consulting_hours: 5, technical_hours: 5 }
+    - { band: 150k_500k, min_acv: 150000, consulting_hours: 10, technical_hours: 10 }
+    - { band: 500k_plus, min_acv: 500000, consulting_hours: 20, technical_hours: 20 }
+
+credentials:
+  issuer: Credly                         # [22]
+  level_valid_days: 365                  # accreditations never expire [47, 80]
+  product_use_days: 90
+
+exams:                                   # Pearson VUE [81, 83]
+  fees: { level_1: 100, level_2: 150, level_3: 150 }
+  program_year_starts: 04-01             # free exams reset every Apr 1, the launch anniversary
+  accelerated_plan_extra_per_person: 1
+  anchor_extra_per_year: 10
+
+onboarding:
+  ceiling_days: { builder: 14, specialist: 30, scale: 45, anchor: 45 }   # [41]
+  plan_days: { standard_30: 30, accelerated: 14 }                        # [40]
+  early_warning:                         # [46]
+    no_login_by_day: 3                   # the PDR or partner manager reaches out
+    nudge_when_behind: 0.25
+    cold_when_behind: 0.40               # a person acts
+    no_sandbox_build_by_day: 10          # partner solutions architect office hours
+
+leads:
+  fit:                                   # [29, 37]
+    auto_approve: 70
+    human_review: 50
+    weights: { client_base: 25, refer: 20, learn: 20, delivery: 20, project_value: 10, customer_count: 5 }
+  intent:                                # [68]
+    application: 30
+    meeting: 20
+    timeline: { now: 20, this_quarter: 10, later: 0 }
+    events_each: 10
+    events_max: 20
+    content_max: 10
+    half_life_days: 30
+    high: 50
+  routing:                               # [35, 70, 71]
+    daily_capacity_per_rep: 8
+    human_review_max_rate: 0.10
+    audit_rate: 0.05
+    person_approves_every_send: true
+
+deal_registration:
+  sla_business_days: 2                   # [79]
+  protection_days: 90
+  products: [warehouse, pipelines, agents, governance]
+
+co_marketing:                            # [77]
+  tiers: [Premier, Elite]
+  campaign_sizes: [3500, 5000, 10000]
+
+contributions:                           # [78, 89]
+  effective: 2027-07-01
+  points: { community_answer: 5, linkedin_post: 10, article: 25 }
+
+inactivity:                              # [56]
+  at_risk_days: 90
+  reactivation_days: 180
+  alumni_days: 365
+
+team:
+  headcount: 9                           # flat all year [66]

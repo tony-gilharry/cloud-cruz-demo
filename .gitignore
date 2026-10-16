@@ -1,0 +1,23 @@
+node_modules/
+
+# Secrets and local config: never committed. See .env.example.
+.env*
+!.env.example
+
+# Database CA certificates (downloaded from Supabase, kept local)
+*.crt
+*.pem
+
+# Local agent instructions
+CLAUDE.md
+AGENTS.md
+.claude/
+
+.DS_Store
+
+# Salesforce CLI local state (source tracking, auth cache)
+.sf/
+.sfdx/
+
+# Salesforce sample: regenerated per org (it holds that org's record type ids)
+blueprint/salesforce/data/

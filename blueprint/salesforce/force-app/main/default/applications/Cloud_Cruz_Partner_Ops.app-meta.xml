@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+  <label>Cloud Cruz Partner Ops</label>
+  <description>The Ecosystem Partner Program: leads to live customers.</description>
+  <formFactors>Large</formFactors>
+  <navType>Standard</navType>
+  <uiType>Lightning</uiType>
+  <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+  <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+  <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+  <tabs>standard-Lead</tabs><tabs>standard-Account</tabs><tabs>standard-Contact</tabs><tabs>standard-Opportunity</tabs><tabs>Deal_Registration__c</tabs><tabs>Opportunity_Partner__c</tabs><tabs>Commission_Accrual__c</tabs><tabs>Credential__c</tabs><tabs>Implementation_Package__c</tabs><tabs>Partner_Touch__c</tabs><tabs>standard-report</tabs><tabs>standard-Dashboard</tabs>
+</CustomApplication>

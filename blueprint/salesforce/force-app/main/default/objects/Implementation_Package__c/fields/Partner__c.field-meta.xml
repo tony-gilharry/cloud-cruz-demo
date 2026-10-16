@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Partner__c</fullName><label>Partner</label><description>The implementing partner.</description><type>Lookup</type><referenceTo>Account</referenceTo><relationshipName>Implementation_Packages</relationshipName><relationshipLabel>Implementation Packages</relationshipLabel><required>true</required><deleteConstraint>Restrict</deleteConstraint></CustomField>

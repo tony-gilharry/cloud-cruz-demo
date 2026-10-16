@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Consulting_Rate__c</fullName><label>Consulting Rate</label><description>$150 an hour maximum, locked for the pilot (decision 61).</description><type>Currency</type><precision>14</precision><scale>2</scale><required>false</required><defaultValue>150</defaultValue></CustomField>

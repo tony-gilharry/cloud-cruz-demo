@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Expires_On__c</fullName><label>Expires On</label><description>Levels last 12 months; accreditations never expire (decisions 47, 80).</description><type>Date</type><required>false</required></CustomField>

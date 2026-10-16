@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Beta_Design_Partner__c</fullName><label>Beta Design Partner</label><description>One of the 25 design partners in the 90-day beta (decision 15).</description><type>Checkbox</type><defaultValue>false</defaultValue></CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Commission_Needs_Paying_Role</fullName>
+  <active>true</active>
+  <description>Only a Sourced or Partner of record row earns commission, and influence earns no cash at all (decisions 74, 85, 94).</description>
+  <errorDisplayField>Opportunity_Partner__c</errorDisplayField>
+  <errorConditionFormula>OR(AND(NOT(ISPICKVAL(Mechanism__c,"SPIFF")), NOT(OR(ISPICKVAL(Opportunity_Partner__r.Role__c,"Sourced"), ISPICKVAL(Opportunity_Partner__r.Role__c,"Partner of record")))), AND(ISPICKVAL(Mechanism__c,"SPIFF"), ISPICKVAL(Opportunity_Partner__r.Role__c,"Influenced")))</errorConditionFormula>
+  <errorMessage>Only a Sourced or Partner of record partner earns commission. Influence is rewarded with implementation work, not cash.</errorMessage>
+</ValidationRule>

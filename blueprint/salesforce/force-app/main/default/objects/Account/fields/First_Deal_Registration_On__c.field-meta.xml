@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>First_Deal_Registration_On__c</fullName><label>First Deal Registration On</label><description>Activation milestone 1 (decision 43).</description><type>Date</type><required>false</required></CustomField>

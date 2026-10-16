@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Sourced_Needs_Sourcing_Partner</fullName>
+  <active>true</active>
+  <description>A sourced deal names the partner that is paid (decision 85).</description>
+  <errorDisplayField>Sourcing_Partner__c</errorDisplayField>
+  <errorConditionFormula>AND(ISPICKVAL(Deal_Source__c,"Sourced"), ISBLANK(Sourcing_Partner__c))</errorConditionFormula>
+  <errorMessage>A sourced deal needs a Sourcing Partner.</errorMessage>
+</ValidationRule>

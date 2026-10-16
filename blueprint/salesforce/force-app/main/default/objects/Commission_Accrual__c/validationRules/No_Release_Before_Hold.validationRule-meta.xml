@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>No_Release_Before_Hold</fullName>
+  <active>true</active>
+  <description>Nothing is released before the 60-day hold ends (decision 21).</description>
+  <errorDisplayField>Released_On__c</errorDisplayField>
+  <errorConditionFormula>AND(ISPICKVAL(Status__c,"Released"), OR(ISBLANK(Released_On__c), Released_On__c &lt; Hold_Until__c))</errorConditionFormula>
+  <errorMessage>Released On must be on or after Hold Until.</errorMessage>
+</ValidationRule>

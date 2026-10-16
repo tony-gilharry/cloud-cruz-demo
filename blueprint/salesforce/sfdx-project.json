@@ -1,0 +1,6 @@
+{
+  "packageDirectories": [{ "path": "force-app", "default": true }],
+  "name": "cloud-cruz-salesforce",
+  "namespace": "",
+  "sourceApiVersion": "67.0"
+}

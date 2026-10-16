@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Deal_In_Hand__c</fullName><label>Deal In Hand</label><description>Automatic urgent fast lane (decision 35).</description><type>Checkbox</type><defaultValue>false</defaultValue></CustomField>

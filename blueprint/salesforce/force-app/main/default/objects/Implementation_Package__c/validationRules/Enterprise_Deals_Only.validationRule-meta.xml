@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Enterprise_Deals_Only</fullName>
+  <active>true</active>
+  <description>Enterprise pricing, $50K ACV or more (decisions 45, 61).</description>
+  <errorDisplayField>Opportunity__c</errorDisplayField>
+  <errorConditionFormula>OR(NOT(ISPICKVAL(Opportunity__r.Pricing_Plan__c,"Enterprise")), Opportunity__r.ACV__c &lt; 50000)</errorConditionFormula>
+  <errorMessage>Implementation packages are for Enterprise deals of $50K ACV or more.</errorMessage>
+</ValidationRule>

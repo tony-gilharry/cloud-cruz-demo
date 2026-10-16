@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Partners_Not_Healthy</fullName><columns>ACCOUNT.NAME</columns><columns>Partner_Tier__c</columns><columns>Segment__c</columns><columns>Health_Selling__c</columns><columns>Health_Customers__c</columns><columns>Health_Skills__c</columns><columns>Health_Delivery__c</columns><filterScope>Everything</filterScope><filters><field>Health_Overall__c</field><operation>equals</operation><value>Red</value></filters><label>Partners with a red</label></ListView>

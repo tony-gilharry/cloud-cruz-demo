@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Elite_Requires_Invitation</fullName>
+  <active>true</active>
+  <description>Elite is invitation only (decision 32).</description>
+  <errorDisplayField>Partner_Tier__c</errorDisplayField>
+  <errorConditionFormula>AND(ISPICKVAL(Partner_Tier__c,"Elite"), NOT(Elite_Invited__c))</errorConditionFormula>
+  <errorMessage>Elite is invitation only. Check Elite Invited first.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Elite_Invited__c</fullName><label>Elite Invited</label><description>Elite is invitation only, from the Anchor list (decision 32).</description><type>Checkbox</type><defaultValue>false</defaultValue></CustomField>

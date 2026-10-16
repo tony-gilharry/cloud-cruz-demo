@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+  <fullName>Deal_In_Hand_Is_Urgent</fullName>
+  <active>true</active>
+  <description>Deal in hand is always urgent (decision 35).</description>
+  <errorDisplayField>Temperature__c</errorDisplayField>
+  <errorConditionFormula>AND(Deal_In_Hand__c, NOT(ISPICKVAL(Temperature__c,"Urgent")))</errorConditionFormula>
+  <errorMessage>A lead with a deal in hand is always Urgent.</errorMessage>
+</ValidationRule>

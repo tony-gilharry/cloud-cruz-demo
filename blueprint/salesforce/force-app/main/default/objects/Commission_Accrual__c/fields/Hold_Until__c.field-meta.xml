@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata"><fullName>Hold_Until__c</fullName><label>Hold Until</label><description>Paid date plus 60 days (decision 21).</description><type>Date</type><formula>Invoice_Paid_On__c + 60</formula><formulaTreatBlanksAs>BlankAsBlank</formulaTreatBlanksAs></CustomField>
